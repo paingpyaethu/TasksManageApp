@@ -1,16 +1,16 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import DashboardScreen from '../screens/Dashboard/DashboardScreen';
-
-const Stack = createStackNavigator();
+import SplashScreen from '../screens/Splash/SplashScreen';
+import {useAtomValue} from 'jotai';
+import {isAuthenticatedAtom} from '../store';
+import DashboardStackNavigator from './stack/DashboardStackNavigator';
 
 const ApplicationNavigator = () => {
+  const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Dashboard" component={DashboardScreen} />
-      </Stack.Navigator>
+      {isAuthenticated ? <DashboardStackNavigator /> : <SplashScreen />}
     </NavigationContainer>
   );
 };
