@@ -5,7 +5,10 @@ import {
   StyleSheet,
   TouchableOpacityProps,
 } from 'react-native';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 import {Colors} from '../../../themes';
 
 interface ButtonProps extends TouchableOpacityProps {
@@ -22,11 +25,15 @@ const Button = ({label, ...rest}: ButtonProps) => {
 
 const styles = StyleSheet.create({
   button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: wp(80),
+    height: hp(7),
     backgroundColor: Colors.secondary,
-    paddingHorizontal: hp(5),
-    paddingVertical: hp(1.2),
-    borderRadius: hp(1),
-    marginTop: hp(1.2),
+    borderColor: Colors.blue200,
+    borderWidth: wp(0.2),
+    borderRadius: hp(2),
+    marginVertical: hp(1.5),
   },
   buttonText: {
     fontSize: hp(2.2),

@@ -44,13 +44,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '80%',
+    width: wp(80),
     height: hp(7),
     borderColor: Colors.blue200,
     borderWidth: wp(0.2),
     borderRadius: hp(2),
-    marginVertical: 10,
-    paddingHorizontal: 10,
+    marginVertical: hp(1.5),
+    paddingHorizontal: wp(3),
   },
   input: {
     flex: 1,
