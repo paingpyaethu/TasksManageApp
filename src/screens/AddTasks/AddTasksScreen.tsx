@@ -24,14 +24,14 @@ import {useTasks} from '../../hooks/useTasks/useTasks';
 import {getFormattedDateTime} from '../../utils/HelperFunc';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {DashboardStackParamList} from '../../../types/Dashboard/DashboardStackType';
+import notifee, {Notification, TriggerType} from '@notifee/react-native';
+import {AndroidMessageChannelId} from '../../utils/Notification';
 
 type AddTaskScreenRouteType = RouteProp<
   DashboardStackParamList,
   'AddTaskScreen'
 >;
-// interface AddTaskScreenProps {
-//   taskToEdit?: TaskType;
-// }
+
 const AddTasksScreen = ({navigation}: any) => {
   const route = useRoute<AddTaskScreenRouteType>();
   const taskToEdit = route.params?.taskToEdit;
@@ -46,7 +46,27 @@ const AddTasksScreen = ({navigation}: any) => {
   const [open, setOpen] = useState(false);
   const [isDate, setIsDate] = useState(taskToEdit ? true : false);
 
-  const handleAddTask = () => {
+  const reminderNotification: Notification = {
+    id: '1',
+    title: `🔔 You set for this task -  ${title} at ${getFormattedDateTime(
+      date,
+    )}`,
+    body: 'Tap on it to check',
+    android: {
+      channelId: AndroidMessageChannelId,
+    },
+    data: {
+      id: '1',
+      action: 'reminder',
+      details: {
+        title: title,
+        desc: desc,
+        date: getFormattedDateTime(date),
+      },
+    },
+  };
+
+  const handleAddTask = async () => {
     if (taskToEdit) {
       editTask(taskToEdit.id, {
         title: title,
@@ -64,6 +84,10 @@ const AddTasksScreen = ({navigation}: any) => {
         navigation.goBack();
       }
     }
+    await notifee.createTriggerNotification(reminderNotification, {
+      type: TriggerType.TIMESTAMP,
+      timestamp: +date,
+    });
   };
 
   return (
