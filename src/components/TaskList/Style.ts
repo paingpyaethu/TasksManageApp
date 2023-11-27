@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
   },
   rowCenter: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     fontWeight: 'bold',
     letterSpacing: 1.2,
+    marginBottom: hp(1),
   },
   descText: {
     fontSize: hp(2),

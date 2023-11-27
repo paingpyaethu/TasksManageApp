@@ -71,14 +71,17 @@ const TaskList = () => {
   };
 
   const renderItem = ({item}: {item: TaskType}) => {
+    const truncatedTitle =
+      item.title.length > 20 ? item.title.substring(0, 20) + '...' : item.title;
+    const truncatedDesc =
+      item.description.length > 50
+        ? item.description.substring(0, 40) + '...'
+        : item.description;
     return (
       <View style={styles.flatListContainer}>
         <View>
           <View style={styles.rowCenter}>
-            <View>
-              <Text style={styles.titleText}>{item.title}</Text>
-              <Text style={styles.descText}>{item.description}</Text>
-            </View>
+            <Text style={styles.titleText}>{truncatedTitle}</Text>
             <BouncyCheckbox
               size={hp(3.5)}
               isChecked={item.completed}
@@ -88,6 +91,9 @@ const TaskList = () => {
               innerIconStyle={{borderWidth: wp(0.5), borderRadius: hp(1)}}
               onPress={() => handleCheckboxPress(item.id)}
             />
+          </View>
+          <View style={{width: wp(80)}}>
+            <Text style={styles.descText}>{truncatedDesc}</Text>
           </View>
           <View style={[styles.rowCenter, {marginTop: hp(2)}]}>
             <Text style={styles.date}>{item?.date}</Text>
