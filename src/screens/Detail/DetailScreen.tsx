@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Colors} from '../../themes';
@@ -43,11 +44,13 @@ const DetailScreen = ({navigation}: any) => {
             <Text style={styles.titleText}>{taskDetail?.title}</Text>
             <Text style={styles.descText}>{taskDetail?.desc}</Text>
           </View>
-          <Image
-            source={require('../../../assets/images/task_detail.png')}
-            resizeMode="cover"
-            style={styles.image}
-          />
+          <View style={{alignItems: 'center'}}>
+            <Image
+              source={require('../../../assets/images/task_detail.png')}
+              resizeMode="cover"
+              style={styles.image}
+            />
+          </View>
         </View>
       </View>
     </SafeAreaWrapper>
@@ -101,8 +104,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.2,
   },
   image: {
-    width: wp(60),
-    height: hp(30),
+    width: wp(70),
+    height: hp(40),
     marginBottom: -hp(10),
   },
 });
