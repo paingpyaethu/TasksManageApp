@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import notifee, {
   AndroidImportance,
@@ -16,6 +16,7 @@ import {
   requestUserPermission,
 } from '../utils/Notification';
 import {navigationRef} from './navigationUtils';
+import SplashScreen from '../screens/Splash/SplashScreen';
 
 if (Platform.OS === 'android') {
   notifee.createChannel({
@@ -28,6 +29,7 @@ if (Platform.OS === 'android') {
 
 const ApplicationNavigator = () => {
   const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     requestUserPermission();
@@ -41,9 +43,18 @@ const ApplicationNavigator = () => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsReady(true);
+    }, 1500);
+  }, []);
+  if (!isReady) {
+    return <SplashScreen />;
+  }
   return (
     <NavigationContainer ref={navigationRef}>
-      {!isAuthenticated ? <DashboardStackNavigator /> : <AuthStackNavigator />}
+      {isAuthenticated ? <DashboardStackNavigator /> : <AuthStackNavigator />}
     </NavigationContainer>
   );
 };
