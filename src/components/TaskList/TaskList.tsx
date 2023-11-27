@@ -17,6 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {DashboardScreenNavigationType} from '../../../types/Dashboard/DashboardStackType';
 import styles from './Style';
 import SearchFilter from '../common/SearchFilter/SearchFilter';
+import EmptyTask from '../common/EmptyTask/EmptyTask';
 
 const TaskList = () => {
   const {tasks, toggleTask, deleteTask} = useTasks();
@@ -68,6 +69,10 @@ const TaskList = () => {
         deleteTask(id);
       },
     });
+  };
+
+  const renderEmptyComponent = () => {
+    return <EmptyTask />;
   };
 
   const renderItem = ({item}: {item: TaskType}) => {
@@ -161,6 +166,7 @@ const TaskList = () => {
         data={filteredTasks}
         renderItem={renderItem}
         keyExtractor={flatlistKeyExtractor}
+        ListEmptyComponent={renderEmptyComponent}
         contentContainerStyle={{paddingBottom: hp(2)}}
       />
     </SafeAreaWrapper>
