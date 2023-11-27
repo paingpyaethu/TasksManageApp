@@ -13,7 +13,6 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import Button from '../../../components/common/Button/Button';
-import SafeAreaWrapper from '../../../components/common/SafeAreaWrapper/SafeAreaWrapper';
 import {useAtomValue, useSetAtom} from 'jotai';
 import {isAuthenticatedAtom, passwordAtom, userNameAtom} from '../../../store';
 import {useNavigation} from '@react-navigation/native';
@@ -57,7 +56,7 @@ const LoginScreen = () => {
       }
     } else {
       return createOneButtonAlert({
-        title: 'Warngin!',
+        title: 'Warning!',
         message: 'Login Invalid.',
         callback: () => {
           setUserName('');
@@ -68,34 +67,32 @@ const LoginScreen = () => {
   };
 
   return (
-    <SafeAreaWrapper>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Image
-          source={require('../../../../assets/images/login.png')}
-          resizeMode="cover"
-          style={{width: wp(60), height: hp(30)}}
-        />
-        <Input
-          placeholder="Username"
-          value={userName}
-          onChangeText={text => setUserName(text)}
-          icon="user"
-        />
-        <Input
-          placeholder="Password"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          secureTextEntry
-          icon="lock"
-        />
-        <Button label="Login" onPress={handleLogin} />
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.registerText}>
-            Don't have an account? Register here
-          </Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </SafeAreaWrapper>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image
+        source={require('../../../../assets/images/login.png')}
+        resizeMode="cover"
+        style={{width: wp(60), height: hp(30)}}
+      />
+      <Input
+        placeholder="Username"
+        value={userName}
+        onChangeText={text => setUserName(text)}
+        icon="user"
+      />
+      <Input
+        placeholder="Password"
+        value={password}
+        onChangeText={text => setPassword(text)}
+        secureTextEntry
+        icon="lock"
+      />
+      <Button label="Login" onPress={handleLogin} />
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <Text style={styles.registerText}>
+          Don't have an account? Register here
+        </Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 

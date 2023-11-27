@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     fontSize: hp(1.8),
     padding: hp(1),
     borderRadius: hp(1),
+    overflow: 'hidden',
     marginRight: wp(3),
   },
 

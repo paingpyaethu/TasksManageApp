@@ -13,7 +13,6 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import Button from '../../../components/common/Button/Button';
-import SafeAreaWrapper from '../../../components/common/SafeAreaWrapper/SafeAreaWrapper';
 import {useAtom, useSetAtom} from 'jotai';
 import {
   isAlreadyRegisteredAtom,
@@ -72,34 +71,32 @@ const RegisterScreen = () => {
   };
 
   return (
-    <SafeAreaWrapper>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Image
-          source={require('../../../../assets/images/register.png')}
-          resizeMode="cover"
-          style={{width: wp(60), height: hp(30)}}
-        />
-        <Input
-          placeholder="Username"
-          value={userName}
-          onChangeText={text => setUserName(text)}
-          icon="user"
-        />
-        <Input
-          placeholder="Password"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          secureTextEntry
-          icon="lock"
-        />
-        <Button label="Register" onPress={handleRegister} />
-        <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
-          <Text style={styles.loginText}>
-            Already have an account? Please Login
-          </Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </SafeAreaWrapper>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image
+        source={require('../../../../assets/images/register.png')}
+        resizeMode="cover"
+        style={{width: wp(70), height: hp(30)}}
+      />
+      <Input
+        placeholder="Username"
+        value={userName}
+        onChangeText={text => setUserName(text)}
+        icon="user"
+      />
+      <Input
+        placeholder="Password"
+        value={password}
+        onChangeText={text => setPassword(text)}
+        secureTextEntry
+        icon="lock"
+      />
+      <Button label="Register" onPress={handleRegister} />
+      <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
+        <Text style={styles.loginText}>
+          Already have an account? Please Login
+        </Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
