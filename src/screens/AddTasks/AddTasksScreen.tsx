@@ -26,6 +26,7 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {DashboardStackParamList} from '../../../types/Dashboard/DashboardStackType';
 import notifee, {Notification, TriggerType} from '@notifee/react-native';
 import {AndroidMessageChannelId} from '../../utils/Notification';
+import {createOneButtonAlert} from '../../components/common/SystemAlert/SystemAlert';
 
 type AddTaskScreenRouteType = RouteProp<
   DashboardStackParamList,
@@ -67,27 +68,55 @@ const AddTasksScreen = ({navigation}: any) => {
   };
 
   const handleAddTask = async () => {
-    if (taskToEdit) {
-      editTask(taskToEdit.id, {
-        title: title,
-        description: desc,
-        date: getFormattedDateTime(date),
+    const currentTime = new Date();
+
+    if (date < currentTime) {
+      return createOneButtonAlert({
+        title: 'Invalid Time!',
+        message: 'Please select a future time.',
+        callback: () => {},
       });
-      navigation.goBack();
+    }
+    if (taskToEdit) {
+      if (title.trim() !== '' || desc.trim() !== '') {
+        editTask(taskToEdit.id, {
+          title: title,
+          description: desc,
+          date: getFormattedDateTime(date),
+        });
+        navigation.goBack();
+        await notifee.createTriggerNotification(reminderNotification, {
+          type: TriggerType.TIMESTAMP,
+          timestamp: +date,
+        });
+      } else {
+        return createOneButtonAlert({
+          title: 'Invalid!',
+          message: 'Please fill the all fields.',
+          callback: () => {},
+        });
+      }
     } else {
-      if (title.trim() !== '') {
+      if (title.trim() !== '' || desc.trim() !== '') {
         addTask(title, desc, date);
         setTitle('');
         setDesc('');
         setDate(new Date());
         setIsDate(false);
         navigation.goBack();
+
+        await notifee.createTriggerNotification(reminderNotification, {
+          type: TriggerType.TIMESTAMP,
+          timestamp: +date,
+        });
+      } else {
+        return createOneButtonAlert({
+          title: 'Invalid!',
+          message: 'Please fill the all fields.',
+          callback: () => {},
+        });
       }
     }
-    await notifee.createTriggerNotification(reminderNotification, {
-      type: TriggerType.TIMESTAMP,
-      timestamp: +date,
-    });
   };
 
   return (
